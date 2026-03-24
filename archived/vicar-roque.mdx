@@ -1,0 +1,168 @@
+---
+title: Vicariate of San Roque
+---
+
+import { Image } from 'astro:assets';
+import { Card, CardGrid, Aside, Icon } from '@astrojs/starlight/components';
+
+{/* Imports */}
+import immacImg from '../../../assets/churches/immaculate-heart-of-mary-parish.jpg';
+import maryImg from '../../../assets/churches/mary-help-of-christians-parish-scaled.jpg';
+import scrdhrtImg from '../../../assets/churches/sacred-heart-of-jesus-parish.jpg';
+import wrkmnImg from '../../../assets/churches/st.-joseph-the-workman-parish.jpg';
+import roqueImg from '../../../assets/churches/san-roque-cathedral.jpg';
+import hlytImg from '../../../assets/churches/holy-trinity-quasi-parish.jpg'
+
+export const ParishProfile = ({ img, fbLink, name, priest, address, contact, children }) => (
+  <div style={{ marginBottom: '5rem', borderBottom: '1px solid var(--sl-color-gray-5)', paddingBottom: '3rem' }}>
+    {/* Image Section */}
+    <div style={{ textAlign: 'center', margin: '2rem auto' }}>
+      <a href={fbLink} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', textDecoration: 'none', width: '100%' }}>
+        <Image src={img} alt={name} style={{ borderRadius: '16px', width: '100%', maxWidth: '850px', height: 'auto', boxShadow: 'var(--sl-shadow-lg)', transition: 'transform 0.3s ease' }} />
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem', marginTop: '1rem', color: 'var(--sl-color-accent-high)', fontWeight: '500' }}>
+          <Icon name="facebook" size="1.2rem" /> 
+          <span style={{ fontSize: '0.9rem' }}>Visit Official Facebook Page</span>
+        </div>
+      </a>
+    </div>
+
+{/* Info Grid */}
+    <div style={{ 
+      display: 'grid', 
+      gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', 
+      gap: '1rem', 
+      marginBottom: '2rem', 
+      alignItems: 'stretch' 
+    }}>
+      {[
+        { label: 'Leadership', val: priest },
+        { label: 'Address', val: address },
+        { label: 'Contact', val: contact }
+      ].map((item) => (
+        <div key={item.label} style={{ 
+          background: 'var(--sl-color-gray-6)', 
+          padding: '1.25rem', 
+          borderRadius: '12px', 
+          border: '1px solid var(--sl-color-gray-5)',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          height: '100%',
+          margin: '0' 
+        }}>
+          <span style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--sl-color-gray-3)', marginBottom: '0.25rem', display: 'block', lineHeight: '1.2' }}>
+            {item.label}
+          </span>
+          <span style={{ fontWeight: '600', color: 'var(--sl-color-white)', lineHeight: '1.2', display: 'block' }}>
+            {item.val}
+          </span>
+        </div>
+      ))}
+    </div>
+
+{/* About Parish*/}
+    <div style={{ 
+      position: 'relative', 
+      paddingLeft: '1.5rem', 
+      borderLeft: '3px solid var(--sl-color-accent)',
+      paddingTop: '0.5rem'
+    }}>
+      <h4 style={{ 
+        marginTop: '0',     
+        marginBottom: '0.75rem', 
+        color: 'var(--sl-color-white)',
+        lineHeight: '1.2'
+      }}>
+        About the Parish
+      </h4>
+      <div style={{ textAlign: 'justify', lineHeight: '1.8', color: 'var(--sl-color-gray-2)', fontSize: '1rem' }}>
+        {children}
+      </div>
+    </div>
+  </div>
+);
+
+{/* Tip */}
+
+<Aside type="tip">
+  Click on any church photo to visit their official community page for mass schedules and announcements.
+</Aside>
+
+
+### Immaculate Heart of Mary Parish
+
+<ParishProfile 
+  name="Immaculate Heart of Mary Parish" 
+  img={immacImg} 
+  fbLink="https://www.facebook.com/ihmpmalabon/" 
+  priest="Fr. Amado V. Gino"
+  address="359 M.H Del Pilar St., Maysilo, Malabon City"
+  contact="Tel. 8-277-2548 / (02) 277 2548"
+>
+Established on November 21, 1988, to serve the residents of Santolan, Maysilo, and Panghulo, the Immaculate Heart of Mary Parish began in a small chapel near Malinta Bridge before securing a permanent 6,000-square-meter site donated by the Religious of the Good Shepherd (RGS) sisters. Under the transformative leadership of its second parish priest, Rev. Fr. Donardo S. Bermejo, the community shifted from passive attendance to active involvement through the creation of Basic Ecclesial Communities and robust theological formation programs. This spiritual growth fueled rapid physical expansion, turning a makeshift chapel into a thriving complex that now includes a school, a medical-dental clinic, a lending cooperative, and an ossuary. Blessed by Cardinal Jaime Sin in 1995, the parish stands today as a model of how spiritual empowerment and community unity can manifest in both profound social services and a vibrant, jam-packed liturgical life.
+</ParishProfile>
+
+### Mary Help of Christians Parish
+
+<ParishProfile 
+  name="Mary Help of Christians Parish" 
+  img={maryImg} 
+  fbLink="https://www.facebook.com/maryhelpofchristiansparish/" 
+  priest="Fr. Kennedy A. Neral"
+  address="J.P Rizal St., Maypajo, Caloocan City"
+  contact="Tel. 8-288-7284"
+>
+Originally a district under the San Roque Parish, Maypajo transitioned into a productive independent community through the early efforts of the “Kapisanan Gabay ng Nayon” and the conceptualization of a formal chapel by the Young Ladies Association of Charity (YLAC) in 1951. Following the inauguration of a temporary chapel in 1952 and the proposal for a permanent structure by Fr. Pedro Abad, the Mary Help of Christians Parish was canonically erected on April 27, 1953, with a new site secured via a land exchange with the Kalookan City government. The permanent church, blessed by Cardinal Rufino Santos, was completed in 1960 and has since become a thriving center for spiritual synergy, fostering a wide array of active lay organizations like the Couples for Christ and Knights of Columbus. Today, the parish stands as a testament to the community’s growth and its commitment to providing holistic support to the parishioners of Maypajo.
+</ParishProfile>
+
+### Sacred Heart of Jesus Parish
+
+<ParishProfile 
+  name="Sacred Heart of Jesus Parish" 
+  img={scrdhrtImg} 
+  fbLink="https://www.facebook.com/SHJPTugatog/" 
+  priest="Fr. Leandro M. Magnait"
+  address="M.H. del Pilar cor., Pureza St., Caloocan City"
+  contact="Tel. 02-8288-3777"
+>
+The Parish of the Sacred Heart of Jesus in Tugatog owes its existence to the pioneering efforts of the Legion of Mary’s Praesidium Regina Pacis, which, alongside the Vincentian Priests and Bishop Teotimo Pacis, organized regular masses across two local chapels starting in 1947. Following a petition encouraged by Fr. Jovito Reyes, the community was officially separated from San Bartolome in 1960, initially using a chapel on M.H. del Pilar as its temporary home. The parish reached significant milestones under the leadership of Fr. Reynaldo Romero, who acquired the permanent site, and Fr. Antonio Benedicto, who oversaw the construction of the church and established the first Parish Council. Over the decades, the parish has continued to flourish through a strong foundation of lay organizations, including the Apostleship of Prayer and the Catholic Women’s League, which remain vital to its spiritual life.
+</ParishProfile>
+
+### St. Joseph the Workman Parish
+
+<ParishProfile 
+  name="St. Joseph the Workman Parish" 
+  img={wrkmnImg} 
+  fbLink="https://www.facebook.com/SaintJosephTheWorkmanParish/" 
+  priest="Fr. Joey C. Enriquez"
+  address="Rev. Fr. Alberto Caballero"
+  contact="Tel. (02) 8287 6113"
+>
+Named appropriately for a district of furniture shops, the St. Joseph the Workman Parish in Sampalukan embodies the industrious and courageous spirit of its patron saint. The community’s religious life began in 1935 through civic organizations like “Patnibay ng Nayon,” eventually evolving into a formal chapel under San Roque Parish that served as a central hub for meetings and monthly masses. Disaster struck just before Christmas in 1983 when a devastating fire leveled the newly renovated structure and the surrounding neighborhood, testing the faith of the residents. Demonstrating the resilience of the carpenter saint, the people rebuilt from the ashes, leading to the official canonical erection of the parish by Cardinal Jaime Sin on April 8, 1994. Today, the parish stands as a powerful symbol of a community that refused to be defeated by tragedy, transforming their charred remains into a thriving testament to divine providence and hard work.
+</ParishProfile>
+
+### San Roque Cathedral Parish
+
+<ParishProfile 
+  name="San Roque Cathedral Parish" 
+  img={roqueImg} 
+  fbLink="https://www.facebook.com/SRCDoK/" 
+  priest="Fr. Rufino P. Yabut"
+  address="A. Mabini Street, cor. 10th Avenue, Caloocan City"
+  contact="Tel. (02) 288 5252"
+>
+Tracing its origins to a small 1765 chapel in Libis Aromahan founded by Fr. Manuel Vanquero, the San Roque Cathedral has evolved from a mission outpost of Tondo into the spiritual heart of the Diocese of Kalookan. Formally established as a parish in 1815 and later moved to its present site in Paltok, the church served as a vital sanctuary during the Philippine Revolution, the American occupation, and World War II, famously housing Katipuneros and General Antonio Luna. Despite a period of dissolved status in the mid-19th century and the physical toll of various wars, the community consistently revitalized the structure through the efforts of dedicated pastors like Msgr. Boanerges Lechuga, who oversaw its major restoration in the 1980s. The church’s historical significance and spiritual resilience were officially recognized in 2003 when Pope John Paul II elevated the parish to a Cathedral following the creation of the Diocese of Kalookan. Today, San Roque Cathedral stands as a majestic beacon of faith and divine providence, serving as the seat of the Bishop for the cities of Kalookan, Malabon, and Navotas.
+</ParishProfile>
+
+### Holy Trinity Quasi Parish
+
+<ParishProfile 
+  name="Holy Trinity Quasi Parish" 
+  img={hlytImg} 
+  fbLink="https://www.facebook.com/HolyTrinityQuasiParish/" 
+  priest=""
+  address="138 Sanchez St., Tinajeros, Malabon City"
+  contact="Tel. (02) 8713 6728"
+>
+The History of Tinajeros Barrio Chapel is a narrative of persistence, beginning with its 1903 existence under Aglipayan administration until a 1909 U.S. Supreme Court ruling restored it to the Catholic Church. After surviving several relocations due to fires and calamities, the chapel found its permanent home in the 1930s on a site marked by a tree with cross-shaped leaves, housing a miraculous Holy Cross of unknown origin. Originally a wooden structure under San Bartolome Parish, the chapel was transformed through a community-wide “bayanihan” effort into its current form by 1961, guided by the architectural plans of resident Rodolfo Bustamante and the spiritual encouragement of the Maryknoll Sisters. While the Holy Cross was its first patron, the community shifted its devotion to the Holy Trinity represented by a donated image and a historic cuadro painting—celebrating its feast annually while maintaining a vibrant network of ministries and lay organizations, such as the Legion of Mary, which has remained active since 1949.
+</ParishProfile>

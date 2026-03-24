@@ -1,0 +1,75 @@
+---
+const { year, month, day, title } = Astro.props;
+
+let displayDate = "";
+
+if (month && day && year) {
+  displayDate = `${month} ${day}, ${year}`; 
+} else if (month && year) {
+  displayDate = `${month} ${year}`;         
+} else {
+  displayDate = year;                  
+}
+---
+<div class="timeline-event">
+  <div class="timeline-dot"></div>
+  <div class="timeline-content">
+    
+    <span class="timeline-date">{displayDate}</span>
+    
+    {title && <h3 class="timeline-title">{title}</h3>}
+    
+    <div class="timeline-body">
+      <slot /> 
+    </div>
+  </div>
+</div>
+<style>
+  .timeline-event {
+    position: relative;
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: -2.45rem; 
+    top: 0.25rem;
+    width: 0.85rem;
+    height: 0.85rem;
+    border-radius: 50%;
+    background-color: var(--sl-color-accent);
+    box-shadow: 0 0 0 4px var(--sl-color-bg); 
+  }
+
+  .timeline-year {
+    display: inline-block;
+    font-weight: 700;
+    color: var(--sl-color-accent-high);
+    background-color: var(--sl-color-accent-low);
+    padding: 0.2rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.05em;
+  }
+
+  .timeline-title {
+    margin-top: 0 !important;
+    margin-bottom: 0.75rem !important;
+    font-size: 1.4rem;
+    color: var(--sl-color-white);
+    line-height: 1.2;
+  }
+
+  .timeline-body {
+    color: var(--sl-color-gray-2);
+    line-height: 1.6;
+    font-size: 0.95rem;
+  }
+  
+  .timeline-body :global(p) {
+    margin-bottom: 1rem;
+  }
+  .timeline-body :global(p:last-child) {
+    margin-bottom: 0;
+  }
+</style>

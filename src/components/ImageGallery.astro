@@ -1,0 +1,139 @@
+---
+interface ImageItem {
+  src: any;
+  alt?: string;
+  caption?: string;
+}
+
+interface Props {
+  images: ImageItem[];
+}
+
+const { images = [] } = Astro.props;
+---
+<div class="gallery-wrapper">
+  <div class="gallery-container">
+    <button class="nav-button prev" aria-label="Previous image">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+
+    <div class="gallery-track">
+      {images.map((img) => (
+        <div class="gallery-item">
+          <img src={img.src} alt={img.alt || "Gallery Image"} />
+          {img.caption && <span class="gallery-caption">{img.caption}</span>}
+        </div>
+      ))}
+    </div>
+
+    <button class="nav-button next" aria-label="Next image">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+  const tracks = document.querySelectorAll('.gallery-track');
+  
+  tracks.forEach(track => {
+    const prevBtn = track.parentElement?.querySelector('.prev');
+    const nextBtn = track.parentElement?.querySelector('.next');
+
+    nextBtn?.addEventListener('click', () => {
+      track.scrollBy({ left: track.clientWidth * 0.8, behavior: 'smooth' });
+    });
+
+    prevBtn?.addEventListener('click', () => {
+      track.scrollBy({ left: -track.clientWidth * 0.8, behavior: 'smooth' });
+    });
+  });
+</script>
+
+<style>
+  .gallery-wrapper {
+    position: relative;
+    margin: 0.5rem 0 2rem 0;
+  }
+
+  .gallery-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .gallery-track {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 1rem;
+    scrollbar-width: none; 
+    -ms-overflow-style: none;  
+    padding: 10px 0;
+    align-items: flex-start;
+  }
+
+  .gallery-track::-webkit-scrollbar {
+    display: none; 
+  }
+
+  :global(.gallery-track p) {
+    display: contents;
+    margin: 0;
+  }
+
+  :global(.gallery-track > *) {
+    margin: 0 !important;
+  }
+
+  .gallery-item {
+    flex: 0 0 85%;
+    scroll-snap-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 0.75rem;
+    display: block;
+  }
+
+  .nav-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+
+  .nav-button:hover {
+    background: var(--sl-color-accent);
+  }
+
+  .nav-button svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .prev { left: -20px; }
+  .next { right: -20px; }
+
+  @media (max-width: 768px) {
+    .nav-button { display: none; } /* Hide buttons on mobile where swipe is better */
+    .gallery-track { scrollbar-width: auto; }
+  }
+</style>

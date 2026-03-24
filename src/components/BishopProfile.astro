@@ -1,0 +1,78 @@
+---
+import { Image } from 'astro:assets';
+---
+
+<div class="bishop-profile">
+
+  <div class="bishop-photo">
+    <Image
+      src="https://dioceseofkalookan.ph/wp-content/uploads/2020/12/DSC_7188-removebg-preview.jpg"
+      alt="His Eminence Pablo Virgilio S. Cardinal David"
+      width={420}
+      height={520}
+      class="bishop-image"
+    />
+  </div>
+
+  <div class="bishop-info">
+
+    <p class="title">His Eminence</p>
+    <h1>Pablo Virgilio S. Cardinal David</h1>
+
+    <p>
+      San Roque Cathedral Compound<br/>
+      A. Mabini St. corner 10th Avenue<br/>
+      Caloocan City
+    </p>
+
+    <p>
+      <strong>Email:</strong>
+      <a href="mailto:ambo.david@yahoo.com">ambo.david@yahoo.com</a>
+    </p>
+
+    <p>
+      <strong>Secretary of the Bishop/Appointments:</strong><br/>
+      Ms. Gigi de Lara
+    </p>
+
+    <p>
+      <strong>Assistant to the Secretary of the Bishop:</strong><br/>
+      Mr. Ryan Rezo
+    </p>
+
+  </div>
+
+</div>
+
+<style>
+.bishop-profile{
+  display:flex;
+  gap:2rem;
+  margin-top:2rem;
+}
+
+.bishop-photo{
+  flex:0 0 320px;
+}
+
+.bishop-image{
+  width:100%;
+  border-radius:var(--sl-border-radius-large);
+}
+
+.bishop-info{
+  flex:1;
+}
+
+.title{
+  color:var(--sl-color-accent);
+  text-transform:uppercase;
+  font-weight:600;
+}
+
+@media (max-width:768px){
+  .bishop-profile{
+    flex-direction:column;
+  }
+}
+</style>

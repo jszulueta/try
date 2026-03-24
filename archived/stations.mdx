@@ -1,0 +1,280 @@
+---
+title: Mission Stations
+description: Mission stations under the Diocese of Kalookan.
+---
+
+import { Image } from 'astro:assets';
+import { CardGrid, Icon } from '@astrojs/starlight/components';
+
+import brhnImg from '../../../assets/stations/birhen-ng-fatima.jpg';
+import ctmnImg from '../../../assets/stations/holy-cross-catmon.jpg';
+import krsmImg from '../../../assets/stations/karisma-mission-station.jpg';
+import jlnImg from '../../../assets/stations/julian-felipe.jpg';
+import olpImg from '../../../assets/stations/our-lady-of-peace.jpg';
+import tnzImg from '../../../assets/stations/tanza-pabahay.jpg';
+import rsryImg from '../../../assets/stations/holy-rosary.jpg';
+import scrdImg from '../../../assets/stations/sacred-heart.jpg';
+import knlrnImg from '../../../assets/stations/kaunlaran-mission.jpg';
+import sgrdImg from '../../../assets/stations/sagrada-familia.jpg';
+import judeImg from '../../../assets/stations/jude-thaddeus.jpg';
+import marthaImg from '../../../assets/stations/martha-mission.jpg';
+import andrsImg from '../../../assets/stations/san-andres.jpg';
+import lngsImg from  '../../../assets/stations/longos-mission.jpg';
+import btstImg from  '../../../assets/stations/san-juan-bautista.jpg';
+import vcntImg from  '../../../assets/stations/vicente-ferrer.jpg';
+import sntlnImg from  '../../../assets/stations/santulan-mission.jpg';
+import stnnImg from  '../../../assets/stations/sto-nino-chapel.jpg';
+import twhrtsImg from  '../../../assets/stations/two-hearts.jpg';
+
+export const StationCard = ({ name, img, address, contact, fbLink }) => (
+  <a 
+    href={fbLink} 
+    target="_blank" 
+    rel="noopener noreferrer" 
+    className="station-card-container"
+  >
+
+  <style>{`
+  .station-card-container {
+  position: relative;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  height: 300px;
+  border: 1px solid var(--sl-color-gray-5);
+  transition: all 0.3s ease;
+  text-decoration: none; 
+  display: flex; 
+  flex-direction: column;
+  justify-content: flex-end;
+  cursor: pointer;
+}
+
+  .station-card-container:hover {
+    border-color: var(--sl-color-accent);
+    box-shadow: var(--sl-shadow-lg);
+  }
+
+  .bg-image-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1; 
+  }
+
+  .overlay-zoom-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.25, 0.45, 0.45, 0.95);
+  }
+
+  .station-card-container:hover .overlay-zoom-img {
+    transform: scale(1.1);
+  }
+
+  .text-overlay {
+    position: relative;
+    z-index: 2; 
+    padding: 1.5rem;
+    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 60%, transparent 100%);
+    width: 100%;
+  }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)) !important; 
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+`}</style>
+
+    <div className="bg-image-wrapper">
+      {typeof img === 'string' ? (
+        <img src={img} alt={name} className="overlay-zoom-img" />
+      ) : (
+        <Image src={img} alt={name} className="overlay-zoom-img" />
+      )}
+    </div>
+    
+    <div className="text-overlay">
+      <h3 style={{ fontSize: '1rem', fontWeight: '700', marginBottom: '0.4rem', color: '#ffffff', textShadow: '0 2px 4px rgba(0,0,0,0.5)', marginTop: '0' }}>
+        {name}
+      </h3>
+      
+      <div style={{ fontSize: '0.8rem', color: '#e2e8f0', marginBottom: '0.8rem', lineHeight: '1.4' }}>
+        <div style={{ display: 'flex', alignItems: 'start' }}>
+          <span>{address}</span>
+        </div>
+      </div>
+
+      <div style={{ borderTop: '1px solid rgba(255,255,255,0.2)', paddingTop: '0.75rem' }}>
+        {contact ? (
+          <div style={{ fontSize:'0.65rem', display: 'flex', alignItems: 'start', gap: '0.4rem', color: '#cbd5e1' }}>
+            <Icon name="phone" size="0.9rem" /> <span>{contact}</span>
+          </div>
+        ) : (
+          <span style={{ fontSize: '0.75rem', color: '#94a3b8', fontStyle: 'italic' }}>Contact info unavailable</span>
+        )}
+      </div>
+    </div>
+  </a>
+);
+
+
+<CardGrid>
+
+  <StationCard 
+    name="Birhen ng Fatima Mission Station"
+    img={brhnImg}
+    address="East Bagong Barrio, Caloocan City"
+    contact="Fatimamissionstation@gmail.com"
+    fbLink="https://www.facebook.com/p/Birhen-ng-Fatima-Mission-Station-61562329195165/"
+  />
+
+  <StationCard 
+    name="Holy Cross - Catmon Mission Station"
+    img={ctmnImg}
+    address="#53 Hernandez Street, Brgy. Catmon, Malabon"
+    contact="holycrosschapel22@gmail.com"
+    fbLink="https://www.facebook.com/HolyCrossChapelCMS/"
+  />
+
+  <StationCard 
+    name="Our Lady of Fatima - Julian Felipe Mission Station"
+    img={jlnImg}
+    address="Julian Felipe, Brgy. 8, Sangandaan, Caloocan"
+    contact="0963 302 4825"
+    fbLink="https://www.facebook.com/p/Our-Lady-of-Fatima-Mission-Station-61567324382605/"
+  />
+
+  <StationCard 
+    name="Mother of Perpetual Help - Karisma Mission Station"
+    img={krsmImg}
+    address="Karisma Village, Malabon"
+    contact=""
+    fbLink="https://www.facebook.com/profile.php?id=61563897982105"
+  />
+
+  <StationCard 
+    name="Our Lady of Peace - Letre Mission Station"
+    img={olpImg}
+    address="Phase 2, Paradise Village, P. Aquino Ave., Malabon"
+    contact="0968 379 1971"
+    fbLink="https://www.facebook.com/BKletremissionstation"
+  />
+
+  <StationCard 
+    name="Tanza Pabahay Mission Station"
+    img={tnzImg}
+    address="Nova Homes 1 & 2, Sampaguita St., Tanza 2, Navotas City"
+    contact="0956 865 4473"
+    fbLink="https://www.facebook.com/OurLadyOfThePoorOfficial/"
+  />
+
+  <StationCard 
+    name="Chapel of Our Lady of the Most Holy Rosary"
+    img={rsryImg}
+    address="Level 5, SM City Grand Central, Caloocan"
+    contact="0977 737 8837"
+    fbLink="https://www.facebook.com/SmgcMostHolyRosary/"
+  />
+
+  <StationCard 
+    name="Our Lady of the Sacred Heart Mission Station"
+    img={scrdImg}
+    address="114A Pineda Compound St., Caloocan"
+    contact="olsh.kalookan@gmail.com "
+    fbLink="https://www.facebook.com/olsh.kalookan"
+  />
+
+  <StationCard 
+    name="Sacred Heart Kaunlaran Mission Station"
+    img={knlrnImg}
+    address="Brgy. 12, Kaunlaran Village, Dagat-dagatan Ave., Caloocan"
+    contact="esuitmissionstation@gmail.com"
+    fbLink="https://www.facebook.com/jesuitmissionstation/"
+  />
+
+  <StationCard 
+    name="Sagrada Familia Pamasawata Mission Station"
+    img={sgrdImg}
+    address="Kamada St., Maypajo, Caloocan"
+    contact=""
+    fbLink="https://www.facebook.com/profile.php?id=61556184177967"
+  />
+
+  <StationCard 
+    name="St. Jude Thaddeus Mission Station"
+    img={judeImg}
+    address="32 Tiangco St., Brgy. Ibaba, Malabon"
+    contact=""
+    fbLink="https://www.facebook.com/StJudeSKIMalabon/"
+  />
+
+  <StationCard 
+    name="Sta. Martha Mission Station"
+    img={marthaImg}
+    address="Pitong Gatang St., Brgy. Sipac, Navotas City"
+    contact="0998 169 8669"
+    fbLink="https://www.facebook.com/p/Ministry-of-Altar-Servers-Pitong-Gatang-Mission-Station-61579268494792/"
+  />
+
+  <StationCard 
+    name="San Andres Mangingisda Mission Station"
+    img={andrsImg}
+    address="Tangos South , Navotas"
+    contact="0991 312 5997"
+    fbLink="https://www.facebook.com/p/Tangos-Mission-Station-100090497918204/"
+  />
+
+  <StationCard 
+    name="Nuestro Señor de Longos Mission Station"
+    img={lngsImg}
+    address="Gen. P. Borromeo, Malabon"
+    contact="0960 452 1196"
+    fbLink="https://www.facebook.com/NSDLongosOFFICIAL/"
+  />
+
+  <StationCard 
+    name="San Juan Bautista Mission Station"
+    img={btstImg}
+    address="49 Kagitingan St., Brgy. Muzon, Malabon"
+    contact="doksanjuanbautista@gmail.com"
+    fbLink="https://www.facebook.com/doksanjuanbautista/"
+  />
+
+  <StationCard 
+    name="San Vicente Ferrer Mission Station"
+    img={vcntImg}
+    address="Salmon St., Longos, Malabon"
+    contact=""
+    fbLink="https://www.facebook.com/salmon.mission/"
+  />
+
+  <StationCard 
+    name="Señor Sta. Cruz Mission Station - Santulan"
+    img={sntlnImg}
+    address="E. Rodriguez St., Santulan, Malabon"
+    contact="Tel. (02) 8726-2587"
+    fbLink="https://www.facebook.com/SantulanMalabonMissionStation/"
+  />
+
+  <StationCard 
+    name="Sto. Niño Potrero Chapel Mission Station"
+    img={stnnImg}
+    address="Sto. Niño Concepcion, Malabon"
+    contact=""
+    fbLink="https://www.facebook.com/santonino1982/"
+  />
+
+  <StationCard 
+    name="Two Hearts of Jesus & Mary Chapel – DM Mission Station"
+    img={twhrtsImg}
+    address="1099 DM Compound, Heroes del 96, Caloocan"
+    contact="0939 530 5631"
+    fbLink="https://www.facebook.com/DMMissionStation/"
+  />
+
+</CardGrid>

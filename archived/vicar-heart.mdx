@@ -1,0 +1,167 @@
+---
+title: Vicariate of Sacred Heart of Jesus
+---
+
+import { Image } from 'astro:assets';
+import { Card, CardGrid, Aside, Icon } from '@astrojs/starlight/components';
+
+{/* Imports */}
+import scrdhrtImg from '../../../assets/churches/sacred-heart-church.jpg';
+import birhenImg from '../../../assets/churches/birhen-ng-lourdes-parish.jpg';
+import sangabImg from '../../../assets/churches/st-gabriel-the-archangel-parish.jpg';
+import stfranImg from '../../../assets/churches/st-francis-of-assisi-and-sta-quiteria-parish-caloocan.jpg';
+import ptrjohnImg from '../../../assets/churches/sts-peter-and-john-parish.jpg';
+import ollujanImg from '../../../assets/churches/our-lady-of-lujan-parish.jpg'
+
+export const ParishProfile = ({ img, fbLink, name, priest, address, contact, children }) => (
+  <div style={{ marginBottom: '5rem', borderBottom: '1px solid var(--sl-color-gray-5)', paddingBottom: '3rem' }}>
+    {/* Image Section */}
+    <div style={{ textAlign: 'center', margin: '2rem auto' }}>
+      <a href={fbLink} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', textDecoration: 'none', width: '100%' }}>
+        <Image src={img} alt={name} style={{ borderRadius: '16px', width: '100%', maxWidth: '850px', height: 'auto', boxShadow: 'var(--sl-shadow-lg)', transition: 'transform 0.3s ease' }} />
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem', marginTop: '1rem', color: 'var(--sl-color-accent-high)', fontWeight: '500' }}>
+          <Icon name="facebook" size="1.2rem" /> 
+          <span style={{ fontSize: '0.9rem' }}>Visit Official Facebook Page</span>
+        </div>
+      </a>
+    </div>
+
+{/* Info Grid */}
+    <div style={{ 
+      display: 'grid', 
+      gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', 
+      gap: '1rem', 
+      marginBottom: '2rem',
+      alignItems: 'stretch' 
+    }}>
+      {[
+        { label: 'Leadership', val: priest },
+        { label: 'Address', val: address },
+        { label: 'Contact', val: contact }
+      ].map((item) => (
+        <div key={item.label} style={{ 
+          background: 'var(--sl-color-gray-6)', 
+          padding: '1.25rem', 
+          borderRadius: '12px', 
+          border: '1px solid var(--sl-color-gray-5)',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          height: '100%',
+          margin: '0' 
+        }}>
+          <span style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--sl-color-gray-3)', marginBottom: '0.25rem', display: 'block', lineHeight: '1.2' }}>
+            {item.label}
+          </span>
+          <span style={{ fontWeight: '600', color: 'var(--sl-color-white)', lineHeight: '1.2', display: 'block' }}>
+            {item.val}
+          </span>
+        </div>
+      ))}
+    </div>
+
+{/* About Parish*/}
+    <div style={{ 
+      position: 'relative', 
+      paddingLeft: '1.5rem', 
+      borderLeft: '3px solid var(--sl-color-accent)',
+      paddingTop: '0.5rem'
+    }}>
+      <h4 style={{ 
+        marginTop: '0',     
+        marginBottom: '0.75rem', 
+        color: 'var(--sl-color-white)',
+        lineHeight: '1.2'
+      }}>
+        About the Parish
+      </h4>
+      <div style={{ textAlign: 'justify', lineHeight: '1.8', color: 'var(--sl-color-gray-2)', fontSize: '1rem' }}>
+        {children}
+      </div>
+    </div>
+  </div>
+);
+
+{/* Tip */}
+
+<Aside type="tip">
+  Click on any church photo to visit their official community page for mass schedules and announcements.
+</Aside>
+
+### Sacred Heart of Jesus Parish – MBS
+
+<ParishProfile 
+  name="Sacred Heart of Jesus Parish – MBS" 
+  img={scrdhrtImg} 
+  fbLink="https://www.facebook.com/SHJPmbs/" 
+  priest=""
+  address="Pilar Rd., Morning Breeze Subdivision Caloocan City"
+  contact="Tel. 8-361-0570"
+>
+Originally part of Our Lady of Grace and later Sts. Peter and John Parish, the Sacred Heart of Jesus community in Morning Breeze evolved from a 1963 chapel served by Oblate Fathers into a fully independent parish established by Cardinal Jaime Sin in 1984. Following decades of fervent prayer, the community constructed an imposing new church dedicated in 1990, which subsequently underwent extensive renovations and expansions under the leadership of priests like Fr. Francisco Bagadiong and Fr. Rufino “Gigi” Yabut. These improvements introduced vital facilities such as the Sacred Heart of Jesus Pastoral Center, a medical clinic, and an ossuary, all while shifting the pastoral focus toward building a vibrant “living Church” through home enthronements, street masses, and active lay involvement. Today, the parish stands as a spiritual haven and a center for social services, dedicated to strengthening the faith-life of the Morning Breeze community through a deep devotion to the Sacred Heart.
+</ParishProfile>
+
+### Birhen Ng Lourdes Parish
+
+<ParishProfile 
+  name="Birhen Ng Lourdes Parish" 
+  img={birhenImg} 
+  fbLink="https://www.facebook.com/BirhenngLourdesParish/" 
+  priest=""
+  address="Malolos., Ave Bagong Barrio Caloocan City"
+  contact="0925 730 9191"
+>
+The Our Lady of Lourdes Parish in Bagong Barrio began in 1964 as a modest chapel in the home of Barrio Captain Cristituto Gali before expanding into a network of local area chapels. Following a community petition, it was canonically erected as an independent parish in 1972 by Cardinal Santos, initially under the title of Our Lady of the Most Blessed Sacrament. Under its first priest, Fr. Jose Fajardo, the church structure was expanded and several mandated lay organizations were established to strengthen the community’s spiritual foundation. In 1975, leadership was transferred to the Missionary Oblates of Mary Immaculate (OMI), who introduced the Basic Christian Community model and successfully petitioned Cardinal Sin to restore the parish’s original name, Birhen ng Lourdes, in 1976.
+</ParishProfile>
+
+### St. Gabriel the Archangel Parish
+
+<ParishProfile 
+  name="St. Gabriel the Archangel Parish" 
+  img={sangabImg} 
+  fbLink="https://www.facebook.com/SGAParish/" 
+  priest="Fr. Romeo C. Tuazon"
+  address="Araneta Ave., cor. Caimito Rd., 1400 Caloocan City"
+  contact="Tel. 8-361-8106"
+>
+Established on August 21, 1963, by Cardinal Rufino Santos, the Saint Gabriel the Archangel Parish in Malabon began under the leadership of Msgr. Pacifico Maria Mendoza, who faced the immense challenge of building a community without a physical church. In its earliest days, the congregation held masses in hospitals and private lawns until a lot was secured in 1964, where parishioners initially worshipped in a doorless, pew-less structure. Through the formation of the first Parish Pastoral Council in 1966, a permanent church was completed over five years, accompanied by a unique novena and image of Saint Gabriel designed by Msgr. Mendoza himself. Over the decades, the parish has been served by a long succession of dedicated priests and monsignors, evolving from its “nothing” beginnings into a well-established center of faith.
+</ParishProfile>
+
+### Sta. Quiteria & St. Francis of Assisi Parish
+
+<ParishProfile 
+  name="Sta. Quiteria & St. Francis of Assisi Parish" 
+  img={stfranImg} 
+  fbLink="https://www.facebook.com/SFASQ/" 
+  priest="Fr. Ramel A. Tapales, MSC"
+  address="Tullahan Rd., Baesa Caloocan City"
+  contact="Tel. 8-984-3063"
+>
+The Parish of San Francisco de Assisi and Sta. Quiteria traces its origins to a miraculous wooden chapel along the Tullahan River, built to honor an image of Sta. Quiteria allegedly found floating in the water. For years, the site was a pilgrimage center famous for stories of the Saint’s mysteries and healings, eventually leading the community to petition for official parish status in 1977. Despite initial bureaucratic hurdles, the persistence of the faithful—aided by the influential Doña Villamor—culminated in the parish’s formal establishment by Cardinal Jaime Sin on September 11, 1979. The church was physically constructed under the leadership of the Italian Franciscan Friars (OFM Conventuals), but pastoral care was later transferred to the Missionaries of the Sacred Heart (MSC) in 1984. Today, the parish has grown into a spiritual motherhouse that manages twenty chapels and recently established its own mission station, continuing its legacy of devotion and community service.
+</ParishProfile>
+
+### Sts. Peter And John Parish
+
+<ParishProfile 
+  name="Sts. Peter And John Parish" 
+  img={ptrjohnImg} 
+  fbLink="https://www.facebook.com/SPJDoK/" 
+  priest="Fr. Carlos C. Ida"
+  address="34 Orange Rd., Potrero 1475 Malabon City"
+  contact="Tel. 8-361-9924"
+>
+Conceived by Rev. Fr. Clemente Lopez and officially established in August 1963 by Cardinal Rufino Santos, the Saints Peter and John Parish was built on land and a steel structure donated by the Araneta family, who named the church to honor both the elderly and the youth. The parish evolved through the leadership of several dedicated priests, beginning with Fr. Severino Pelayo, who introduced foundational lay organizations, and Fr. Antonio Benedicto, who completed the church construction and established the first Lay Ministers. Subsequent renovations, including the addition of an Adoration Chapel and a Reconciliation room, were spearheaded by Fr. Aloysius Aliño, while the current leadership under Fr. Leandro Magnait focuses on bridging the gap between God and the community through vigorous pastoral engagement. Today, the parish remains a symbol of spiritual unity, shepherding a diverse flock under the patronage of two of Christ’s most prominent apostles.
+</ParishProfile>
+
+### Our Lady of Lujan Parish
+
+<ParishProfile 
+  name="Our Lady of Lujan Parish" 
+  img={ollujanImg} 
+  fbLink="https://www.facebook.com/BIRHENNGLUJAN.PH/" 
+  priest="Rev. Fr. James Ty, IVE"
+  address=" #56 Malvar Street, Bagong Barrio, Caloocan City"
+  contact="Tel. 365-5299 / 366-1399"
+>
+Tracing its roots to 1960 with the arrival of the image of Sta. Lutgarda from Pampanga, the Sta. Lutgarda chapel served as the foundational spiritual site for Bagong Barrio before the establishment of the Birhen ng Lourdes Parish. Over several decades, the chapel underwent significant physical transformations from wood to concrete and was eventually moved to its current location on Gen. Malvar Extension. In 2005, the community entered a new era under the care of the Institute of the Incarnate Word (IVE), which elevated the chapel into a church and expanded liturgical services. Led by Fr. Luis Eduardo Zapata, the community conducted extensive missions to serve the ten surrounding barangays, offering free baptisms and fostering deep local ties. This spiritual growth culminated in the construction of a beautiful new church—dedicated to the Virgin Mary of Lujan in 2009—and the official establishment of the Birhen ng Lujan Quasi-Parish in 2010.
+</ParishProfile>

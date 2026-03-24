@@ -1,0 +1,54 @@
+---
+// src/components/ShareButtons.astro
+const { title = 'Diocese of Kalookan' } = Astro.props;
+
+const currentUrl = encodeURIComponent(Astro.url.href);
+const encodedTitle = encodeURIComponent(title);
+
+const fbShare = `https://www.facebook.com/sharer/sharer.php?u=${currentUrl}`;
+const xShare = `https://twitter.com/intent/tweet?url=${currentUrl}&text=${encodedTitle}`;
+const pinShare = `https://pinterest.com/pin/create/button/?url=${currentUrl}&description=${encodedTitle}`;
+---
+
+<div class="share-row not-content">
+  <span class="share-label">Share this:</span>
+  <a href={fbShare} target="_blank" rel="noopener noreferrer" class="share-btn fb">Facebook</a>
+  <a href={xShare} target="_blank" rel="noopener noreferrer" class="share-btn x">X</a>
+  <a href={pinShare} target="_blank" rel="noopener noreferrer" class="share-btn pin">Pinterest</a>
+</div>
+
+<style>
+  .share-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 1.5rem 0;
+    flex-wrap: wrap;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--sl-color-gray-5);
+  }
+
+  .share-label {
+    font-size: 0.85rem;
+    color: var(--sl-color-gray-3);
+    font-weight: 600;
+  }
+
+  .share-btn {
+    font-size: 0.8rem;
+    padding: 0.25rem 0.8rem;
+    border-radius: 999px;
+    text-decoration: none !important;
+    color: white !important;
+    font-weight: 500;
+    transition: opacity 0.2s ease;
+  }
+
+  .share-btn:hover {
+    opacity: 0.8;
+  }
+
+  .fb { background-color: #1877F2; }
+  .x { background-color: #000000; border: 1px solid #333; }
+  .pin { background-color: #E60023; }
+</style>

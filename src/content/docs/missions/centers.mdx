@@ -1,0 +1,315 @@
+---
+title: Mission Centers
+description: Mission centers serving the Diocese of Kalookan.
+---
+
+import { Image } from 'astro:assets';
+import { Card, CardGrid, Aside, Icon } from '@astrojs/starlight/components';
+
+import josephImg from '../../../assets/mission-centers/joseph-clinics.jpg';
+import ollImg from '../../../assets/mission-centers/our-lady-of-lujan-mission-center.jpg';
+import anakImg from '../../../assets/mission-centers/anak-tnk.jpg'
+import phbkImg from '../../../assets/mission-centers/philbook.jpg'
+
+{/* 1. Main Design for each entry */}
+export const MissionProfile = ({ img, fbLink, name, contact, category, address, children }) => (
+  <div style={{ marginBottom: '5rem', borderBottom: '1px solid var(--sl-color-gray-5)', paddingBottom: '3rem' }}>
+    
+    {/* Image Section */}
+    <div style={{ textAlign: 'center', margin: '2rem auto' }}>
+      <a href={fbLink} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', textDecoration: 'none', width: '100%' }}>
+        <Image src={img} alt={name} style={{ borderRadius: '16px', width: '100%', maxWidth: '850px', height: 'auto', boxShadow: 'var(--sl-shadow-lg)', transition: 'transform 0.3s ease' }} />
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem', marginTop: '1rem', color: 'var(--sl-color-accent-high)', fontWeight: '500' }}>
+          <Icon name="facebook" size="1.2rem" /> 
+          <span style={{ fontSize: '0.9rem' }}>Official Facebook Page</span>
+        </div>
+      </a>
+    </div>
+
+    <div style={{ 
+      display: 'grid', 
+      gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', 
+      gap: '1rem', 
+      marginBottom: '2rem',
+      alignItems: 'stretch'
+    }}>
+      <div style={boxStyle}>
+        <span style={labelStyle}>Service Category</span>
+        <span style={valueStyle}>{category}</span>
+      </div>
+      <div style={boxStyle}>
+        <span style={labelStyle}>Primary Address</span>
+        <span style={valueStyle}>{address}</span>
+      </div>
+      <div style={boxStyle}>
+        <span style={labelStyle}>Contact</span>
+        <span style={valueStyle}>{contact}</span>
+      </div>
+    </div>
+
+    {/* About Section */}
+    <div style={{ position: 'relative', paddingTop: '0.5rem' }}>
+      <h4 style={{ marginTop: '0', marginBottom: '0.75rem', color: 'var(--sl-color-white)' }}>Mission & Purpose</h4>
+      <div style={{ textAlign: 'justify', lineHeight: '1.8', color: 'var(--sl-color-gray-2)', fontSize: '1rem' }}>
+        {children}
+      </div>
+    </div>
+  </div>
+);
+
+export const boxStyle = {
+  background: 'var(--sl-color-gray-6)', 
+  padding: '1.25rem', 
+  borderRadius: '12px', 
+  border: '1px solid var(--sl-color-gray-5)',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  height: '100%',
+  margin: '0' 
+};
+
+export const labelStyle = {
+  fontSize: '0.65rem',
+  textTransform: 'uppercase',
+  letterSpacing: '0.05em',
+  color: 'var(--sl-color-gray-3)',
+  display: 'block',
+  marginTop: '0', 
+  marginBottom: '0.4rem', 
+  lineHeight: '1'
+};
+
+export const valueStyle = {
+  fontWeight: '600',
+  color: 'var(--sl-color-white)',
+  lineHeight: '1.2',
+  display: 'block',
+  fontSize: '0.85rem',
+  margin: '0', 
+  padding: '0'
+};
+
+export const accordionStyle = {
+  borderBottom: '1px solid var(--sl-color-gray-5)',
+  padding: '1rem 1.25rem',
+  cursor: 'pointer',
+  transition: 'background 0.2s ease'
+};
+
+export const summaryStyle = {
+  fontWeight: '600',
+  color: 'var(--sl-color-white)',
+  listStyle: 'none', 
+  display: 'flex',
+  alignItems: 'center',
+  cursor: 'pointer'
+};
+
+export const contentStyle = {
+  padding: '0.75rem 0 0.25rem 0',
+  fontSize: '0.95rem',
+  color: 'var(--sl-color-gray-2)',
+  lineHeight: '1.6'
+};
+
+<Aside type="note">
+  The Diocese of Kalookan partners with these mission centers to provide holistic care—medical, social, and spiritual—to our brothers and sisters in need.
+</Aside>
+
+---
+
+### Joseph Clinic Mission Center
+
+<MissionProfile 
+  name="Joseph Clinic Mission Center" 
+  img={josephImg} 
+  fbLink="https://www.facebook.com/p/Joseph-Clinic-Mission-Center-61575181985373/"
+  category="Medical & Charitable Care"
+  address="268 MH Del Pilar cor. Tongco St., Maysilo, Malabon City"
+  contact="philjsclinic@naver.com "
+>
+  Joseph Clinic is a medical institution providing charitable medical care to the poor and sick. 
+  Founded by the late Fr. Mathias Choi Young-Sik, the clinic follows a mission of caring for 
+  the vulnerable with the love of Christ. Helping poor neighbors is a concrete practice of 
+  the Church’s mission to provide healing to those in need.
+
+  <div style={{ marginTop: '1.5rem' }}>
+    
+    <details style={accordionStyle}>
+      <summary style={summaryStyle}>01. Free Medical Care</summary>
+      <div style={contentStyle}>
+      We offer daily free medical care and free prescription services with the help of local volunteer doctors. In addition, the Korean medical team visits the clinic 2 or 3 times a year to provide medical services.
+      </div>
+    </details>
+
+    <details style={accordionStyle}>
+      <summary style={summaryStyle}>02. Free Meals for Children</summary>
+      <div style={contentStyle}>
+        We serve free meals because there are many children who are suffering from serious illnesses due to lack of nutrition. Lunch is provided to 200 children with malnutrition everyday.
+      </div>
+    </details>
+
+    <details style={accordionStyle}>
+      <summary style={summaryStyle}>03. Strategic Location (Malabon)</summary>
+      <div style={contentStyle}>
+        The clinic is located in Malabon City of the Diocese of Caloocan and is the poorest urban areas in the Philippines. Many residents are suffering from various diseases due to poor and polluted environment and many children are starving because of poverty and are not well educated.
+      </div>
+    </details>
+
+    <details style={accordionStyle}>
+      <summary style={summaryStyle}>04. Support Scholarships</summary>
+      <div style={contentStyle}>
+        Beyond health, the mission supports 60 scholars who would otherwise be unable to continue their studies, 
+        opening a path toward long-term empowerment.
+      </div>
+    </details>
+
+  </div>
+</MissionProfile>
+
+### Our Lady of Lujan Mission Center
+
+<MissionProfile 
+  name="Our Lady of Lujan Mission Center" 
+  img={ollImg} 
+  fbLink="https://www.facebook.com/lujanmercyhomeforgirls/"
+  category="Shelter & Education for Girls"
+  address="40 Pilar Rd., Morning Breeze Subdivision, Caloocan "
+  contact="0920 122 4707"
+>
+  It is a non-stock, non-profit, non-government organization, and Registered and Licensed by the
+  Security and Exchange Commission (SEC) and the Department of Social Welfare and Development (DSWD);
+  managed and served by the Institute of Servants of the Lord and the Virgin of Matara (SSVM Sisters)
+  which solely relies on the Divine Providence of God, through individual donations both local and abroad
+  and also from foundations and any other religious organizations and private sectors.
+
+  <div style={{ marginTop: '1.5rem' }}>
+    
+    <details style={accordionStyle}>
+      <summary style={summaryStyle}>01. Holistic Care for Girls</summary>
+      <div style={contentStyle}>
+        The center acts as a specialized home providing for the physical, emotional, and spiritual needs of girls, including many orphaned by Typhoon Yolanda.
+      </div>
+    </details>
+
+    <details style={accordionStyle}>
+      <summary style={summaryStyle}>02. Formation and Education</summary>
+      <div style={contentStyle}>
+      The mission focuses on providing moral, intellectual, and human formation to help the children develop, grow, and believe in their potential for a better life.
+      </div>
+    </details>
+
+    <details style={accordionStyle}>
+      <summary style={summaryStyle}>03. Faith-Based Outreach</summary>
+      <div style={contentStyle}>
+      Associated with the Our Lady of Lujan Parish and the Servants of the Lord the Virgin of Matará, the center integrates spiritual growth with daily care.
+      </div>
+    </details>
+
+    <details style={accordionStyle}>
+      <summary style={summaryStyle}>04. Support for Vulnerable Children</summary>
+      <div style={contentStyle}>
+       It is dedicated to helping children in difficult situations overcome their circumstances through care, protection, and education.
+      </div>
+    </details>
+
+  </div>
+</MissionProfile>
+
+### Tulay ng Kabataan
+
+<MissionProfile 
+  name="Tulay ng Kabataan" 
+  img={anakImg}
+  fbLink="https://www.facebook.com/anaktnkfoundation/"
+  category="Social Welfare and Development Organization"
+  address="94 Kalayaan Ave., Brgy. Central, Quezon City"
+  contact="contact@anak-tnk.org"
+>
+  For the past 25 years, ANAK-Tnk has been working with the poorest and most vulnerable people
+  in Metro Manila, Philippines: children, abandoned people in the streets and families in the slums. 
+  The priority of ANAK-Tnk is the care of each and every child to help them rebuild their lives
+  despite their deep wounds. The foundation’s actions are based on a family and lasting commitment.
+
+  <div style={{ marginTop: '1.5rem' }}>
+    
+    <details style={accordionStyle}>
+      <summary style={summaryStyle}>01. Nutrition</summary>
+      <div style={contentStyle}>
+      In the Philippines, more than one in ten children do not have enough to eat and one in three is stunted.
+      We provide balanced meals to children and training in nutrition to local poor communities.
+      </div>
+    </details>
+
+    <details style={accordionStyle}>
+      <summary style={summaryStyle}>02. Education</summary>
+      <div style={contentStyle}>
+        In the Philippines, one child out of ten is not attending school. We support each child throughout
+        his or her schooling, which we adapt according to his or her needs.
+      </div>
+    </details>
+
+    <details style={accordionStyle}>
+      <summary style={summaryStyle}>03. Health</summary>
+      <div style={contentStyle}>
+      40% of the urban population lives in extreme unhealthy living conditions. We provide each child with
+      appropriate medical care and train local poor communities in basic hygiene and health.
+      </div>
+    </details>
+
+    <details style={accordionStyle}>
+      <summary style={summaryStyle}>04. Protection</summary>
+      <div style={contentStyle}>
+      Drugs, violence, rape, prostitution: children are the first victims. We provide psychological and
+      legal support based on our prevention and child protection Charter.
+      </div>
+    </details>
+
+  </div>
+</MissionProfile>
+
+### Philbook
+
+<MissionProfile 
+  name="Philbook" 
+  img={phbkImg}
+  fbLink="https://www.facebook.com/profile.php?id=100094386333503"
+  category="Social Welfare and Development Organization"
+  address="Blk 2, Pamasawata C3, Dagat-Dagatan, Caloocan"
+  contact="ig: @philbookngo"
+>
+  Philbook in Caloocan is a non-profit organization focused on improving children's access to culture and
+  education. They organize community activities, such as field trips and holiday parties for local children,
+  often featuring French volunteers who aim to promote these children’s development. 
+
+  <div style={{ marginTop: '1.5rem' }}>
+    
+    <details style={accordionStyle}>
+      <summary style={summaryStyle}>01. Street Libraries</summary>
+      <div style={contentStyle}>
+      We organized street libraries from Tuesday to Sunday. During these sessions, a story was read by a volunteer
+      Philippine. Once the story was finished, the children received a coloring page and could participate in an 
+      activity with various logic, French, or math games that we had prepared beforehand.
+      </div>
+    </details>
+
+    <details style={accordionStyle}>
+      <summary style={summaryStyle}>02. Fixed library</summary>
+      <div style={contentStyle}>
+        After extensive renovations, the library has become a place where children can learn while having fun. We've 
+        implemented activities linked to specific skills (for example, math on Thursdays). Once the two activities 
+        are completed, we read them a story, and the children can then enjoy some reading time.
+      </div>
+    </details>
+
+    <details style={accordionStyle}>
+      <summary style={summaryStyle}>03. Cultural events</summary>
+      <div style={contentStyle}>
+      We organized an Olympics for about a hundred children, a Christmas party for 200 children from the slums, and 
+      a visit to the Planetarium. In addition, we coached a football team and organized matches with children from 
+      other slums.
+      </div>
+    </details>
+  </div>
+</MissionProfile>

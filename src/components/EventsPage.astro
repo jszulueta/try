@@ -1,0 +1,411 @@
+---
+// Import events data from the data file
+import { events } from '../content/docs/events/events.ts';
+const eventsJson = JSON.stringify(events);
+---
+
+<div class="events-wrapper">
+
+  <!-- ── Search + Filter Bar ── -->
+  <div class="events-controls">
+
+    <!-- Search input -->
+    <div class="search-box">
+      <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <span class="sr-only">Search events</span>
+      <input
+        type="search"
+        id="event-search"
+        placeholder="Search events..."
+        aria-label="Search events"
+      />
+    </div>
+
+    <!-- Dropdown filters -->
+    <select id="month-filter" aria-label="Filter by month">
+      <option value="">Month</option>
+      <option value="1">January</option>
+      <option value="2">February</option>
+      <option value="3">March</option>
+      <option value="4">April</option>
+      <option value="5">May</option>
+      <option value="6">June</option>
+      <option value="7">July</option>
+      <option value="8">August</option>
+      <option value="9">September</option>
+      <option value="10">October</option>
+      <option value="11">November</option>
+      <option value="12">December</option>
+    </select>
+
+    <!-- Add years-->
+    <select id="year-filter" aria-label="Filter by year">
+      <option value="">Year</option>
+      <option value="2025">2025</option>
+      <option value="2026">2026</option>
+    </select>
+
+    <select id="status-filter" aria-label="Filter by status">
+      <option value="">Status</option>
+      <option value="upcoming">Upcoming</option>
+      <option value="ongoing">Ongoing</option>
+      <option value="past">Past</option>
+    </select>
+
+  </div>
+
+  <!-- Shows "Showing X events" text -->
+  <p class="results-count" id="results-count"></p>
+
+  <!-- Events are rendered here -->
+  <div id="events-list"></div>
+
+</div>
+
+<script define:vars={{ eventsJson }}>
+  const events = JSON.parse(eventsJson);
+
+  // Month names used for display
+  const MONTHS = ["January","February","March","April","May","June",
+                  "July","August","September","October","November","December"];
+
+  // Formats a date range into a readable string
+  // e.g. "December 1–31, 2025" or "November 1 – December 31, 2025"
+  function formatDateRange(start, end) {
+    const s = new Date(start + 'T00:00:00');
+    const e = new Date(end + 'T00:00:00');
+    const sMonth = MONTHS[s.getMonth()];
+    const eMonth = MONTHS[e.getMonth()];
+    if (s.getFullYear() !== e.getFullYear())
+      return `${sMonth} ${s.getDate()}, ${s.getFullYear()} – ${eMonth} ${e.getDate()}, ${e.getFullYear()}`;
+    if (s.getMonth() !== e.getMonth())
+      return `${sMonth} ${s.getDate()} – ${eMonth} ${e.getDate()}, ${s.getFullYear()}`;
+    if (s.getDate() !== e.getDate())
+      return `${sMonth} ${s.getDate()}–${e.getDate()}, ${s.getFullYear()}`;
+    return `${sMonth} ${s.getDate()}, ${s.getFullYear()}`;
+  }
+
+  // Returns a colored badge based on event status
+  // To change the label, edit the text e.g. 'Ended' -> 'Celebrated'
+  function statusBadge(status) {
+    const map = {
+      upcoming: { label: 'Upcoming', cls: 'badge-upcoming' },
+      ongoing:  { label: 'Ongoing',  cls: 'badge-ongoing'  },
+      past:     { label: 'Ended',    cls: 'badge-past'     },
+    };
+    const { label, cls } = map[status] || map.past;
+    return `<span class="badge ${cls}">${label}</span>`;
+  }
+
+  // Groups events by month and sorts newest first
+  function groupByMonth(filteredEvents) {
+    const groups = {};
+    filteredEvents.forEach(ev => {
+      const d = new Date(ev.startDate + 'T00:00:00');
+      const key = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+      const label = `${MONTHS[d.getMonth()]} ${d.getFullYear()}`;
+      if (!groups[key]) groups[key] = { label, events: [] };
+      groups[key].events.push(ev);
+    });
+    // Sort groups newest first
+    return Object.entries(groups)
+      .sort((a, b) => b[0].localeCompare(a[0]))
+      .map(([, v]) => v);
+  }
+
+  // Builds and injects the HTML for the events list
+  function renderEvents(filtered) {
+    const list = document.getElementById('events-list');
+    const count = document.getElementById('results-count');
+
+    // Show empty state if no events match
+    if (filtered.length === 0) {
+      count.textContent = '';
+      list.innerHTML = `
+        <div class="empty-state">
+          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+          <p>No events found. Try adjusting your search or filters.</p>
+        </div>`;
+      return;
+    }
+
+    count.textContent = `Showing ${filtered.length} event${filtered.length !== 1 ? 's' : ''}`;
+
+    const groups = groupByMonth(filtered);
+    list.innerHTML = groups.map(group => `
+
+      <div class="month-group">
+
+        <!-- Month label with dot -->
+        <h3 class="month-heading">
+          <span class="month-dot"></span>${group.label}
+        </h3>
+
+        <!-- Horizontal line under month heading -->
+        <hr style="border: none; border-top: 1px solid var(--sl-color-gray-5); margin: 0.75rem 0;" />
+
+        <div class="event-cards">
+          ${group.events.map(ev => `
+
+            <!-- Single event card -->
+            <div class="event-card" data-status="${ev.status}">
+
+              <!-- Event title + status badge -->
+              <div class="event-card-header">
+                <div>
+                  <h4 class="event-title">${ev.title}</h4>
+                </div>
+                ${statusBadge(ev.status)}
+              </div>
+
+              <!-- Date and location rows -->
+              <div class="event-meta">
+
+                <!-- Date row: icon + date range -->
+                <div style="display: flex; align-items: center; gap: 0.4rem;">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                  ${formatDateRange(ev.startDate, ev.endDate)}
+                </div>
+
+                <!-- Location row: icon + address -->
+                <div style="display: flex; align-items: center; gap: 0.4rem;">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                  ${ev.location}
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Divider between events -->
+            <hr style="border: none; border-top: 1px solid var(--sl-color-gray-5); margin: 0.75rem 0;" />
+
+          `).join('')}
+        </div>
+      </div>
+
+    `).join('');
+  }
+
+  // Filter function
+  function filter() {
+    const query = document.getElementById('event-search').value.toLowerCase();
+    const month = document.getElementById('month-filter').value;
+    const year  = document.getElementById('year-filter').value;
+    const status = document.getElementById('status-filter').value;
+
+    const filtered = events.filter(ev => {
+      const d = new Date(ev.startDate + 'T00:00:00');
+      // Match search query against title and location
+      const matchQuery = !query ||
+        ev.title.toLowerCase().includes(query) ||
+        (ev.titleEn || '').toLowerCase().includes(query) ||
+        ev.location.toLowerCase().includes(query);
+      const matchMonth  = !month  || (d.getMonth() + 1) === parseInt(month);
+      const matchYear   = !year   || d.getFullYear() === parseInt(year);
+      const matchStatus = !status || ev.status === status;
+      return matchQuery && matchMonth && matchYear && matchStatus;
+    });
+
+    renderEvents(filtered);
+  }
+
+  // Attach filter to all inputs
+  document.getElementById('event-search').addEventListener('input', filter);
+  document.getElementById('month-filter').addEventListener('change', filter);
+  document.getElementById('year-filter').addEventListener('change', filter);
+  document.getElementById('status-filter').addEventListener('change', filter);
+
+  // Run on page load to show all events initially
+  filter();
+</script>
+
+<style>
+  .events-wrapper {
+    max-width: 800px;
+  }
+
+  /* Visually hidden text for screen readers only */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* ── Controls: search bar + filter dropdowns ── */
+  .events-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  /* Shared height for search box and selects */
+  .search-box,
+  .events-controls select {
+    height: 36px;
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.5rem;
+    background: var(--sl-color-bg);
+    font-size: 0.875rem;
+    box-sizing: border-box;
+  }
+
+  /* Search box */
+  .search-box {
+    display: flex;
+    align-items: center;
+    align-self: center;
+    margin-top: 16px;
+    gap: 0.4rem;
+    padding: 0 0.75rem;
+    width: 240px;
+    color: var(--sl-color-gray-3);
+    cursor: text;
+  }
+  .search-box:focus-within {
+    border-color: var(--sl-color-accent);
+    outline: 2px solid var(--sl-color-accent-low);
+  }
+  .search-box svg {
+    flex-shrink: 0;
+  }
+  .search-box input {
+    border: none;
+    background: transparent;
+    color: var(--sl-color-white);
+    font-size: 0.875rem;
+    width: 100%;
+    height: 100%;
+    outline: none;
+    padding: 0;
+  }
+
+  /* Filter dropdowns */
+  .events-controls select {
+    padding: 0 0.75rem;
+    color: var(--sl-color-white);
+    cursor: pointer;
+  }
+  .events-controls select:focus {
+    border-color: var(--sl-color-accent);
+    outline: 2px solid var(--sl-color-accent-low);
+  }
+
+  /* "Showing X events" text */
+  .results-count {
+    font-size: 0.85rem;
+    color: var(--sl-color-gray-3);
+    margin-bottom: 1rem;
+  }
+
+  /* ── Month group (e.g. "December 2025") ── */
+  .month-group { margin-bottom: 2rem; }
+  .month-heading {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--sl-color-gray-3);
+    margin-bottom: 0.75rem;
+    border: none;
+    padding: 0;
+  }
+  /* Colored dot before month label */
+  .month-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--sl-color-accent);
+    flex-shrink: 0;
+  }
+
+  /* ── Event cards ── */
+  .event-cards { display: flex; flex-direction: column; gap: 0.75rem; }
+  .event-card {
+    border: 1px solid var(--sl-color-gray-6);
+    border-left: 3px solid var(--sl-color-accent); /* accent left border */
+    border-radius: 0.75rem;
+    padding: 1rem 1.25rem;
+    background: var(--sl-color-bg-nav);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .event-card:hover {
+    border-left-color: var(--sl-color-accent);
+    border-color: var(--sl-color-gray-4);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+  }
+
+  /* Title row: event name on left, badge on right */
+  .event-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--sl-color-gray-6); /* divider under title */
+  }
+  .event-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+    color: var(--sl-color-white);
+  }
+
+  /* ── Status badges ── */
+  /* To change colors, edit the background and color values below */
+  .badge {
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .badge-upcoming { background: #1a3a5c; color: #60a5fa; }
+  .badge-ongoing  { background: #1a3a2a; color: #4ade80; }
+  .badge-past     { background: #2a2a2a; color: #a1a1aa; }
+
+  /* ── Meta (date + location) ── */
+  .event-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 1.25rem;
+    font-size: 0.82rem;
+    color: var(--sl-color-gray-3);
+  }
+  .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.2rem 0;
+  }
+  .meta-item + .meta-item {
+    border-left: 1px solid var(--sl-color-gray-6);
+    padding-left: 1.25rem;
+  }
+  .meta-tag {
+    background: var(--sl-color-gray-6);
+    padding: 0.1rem 0.5rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+  }
+
+  /* ── Empty state (no results found) ── */
+  .empty-state {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--sl-color-gray-3);
+  }
+  .empty-state svg { margin-bottom: 1rem; opacity: 0.4; }
+</style>

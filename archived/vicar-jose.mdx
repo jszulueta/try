@@ -1,0 +1,195 @@
+---
+title: Vicariate of San Jose De Navotas
+---
+
+import { Image } from 'astro:assets';
+import { Card, CardGrid, Aside, Icon } from '@astrojs/starlight/components';
+
+{/* Imports */}
+import sanilImg from '../../../assets/churches/san-ildefonso-parish-navotas.jpg';
+import sanexImg from '../../../assets/churches/san-exequiel-moreno.jpg';
+import sanroqImg from '../../../assets/churches/san-roque-de-navotas-parish.JPG';
+import shrineImg from '../../../assets/churches/diocesan-shrine-and-parish-of-san-jose-de-navotas.jpg';
+import stclareImg from '../../../assets/churches/st-clare-of-assisi-parish.jpg';
+import sanloreImg from '../../../assets/churches/san-lorenzo-ruiz-and-companion-martyrs.jpg'
+import stoninoImg from '../../../assets/churches/sto-niño-de-pasion-parish.jpg'
+import nuestraImg from '../../../assets/churches/nuestra-señora-de-los-remedios.jpg'
+
+export const ParishProfile = ({ img, fbLink, name, priest, address, contact, children }) => (
+  <div style={{ marginBottom: '5rem', borderBottom: '1px solid var(--sl-color-gray-5)', paddingBottom: '3rem' }}>
+    {/* Image Section */}
+    <div style={{ textAlign: 'center', margin: '2rem auto' }}>
+      <a href={fbLink} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', textDecoration: 'none', width: '100%' }}>
+        <Image src={img} alt={name} style={{ borderRadius: '16px', width: '100%', maxWidth: '850px', height: 'auto', boxShadow: 'var(--sl-shadow-lg)', transition: 'transform 0.3s ease' }} />
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem', marginTop: '1rem', color: 'var(--sl-color-accent-high)', fontWeight: '500' }}>
+          <Icon name="facebook" size="1.2rem" /> 
+          <span style={{ fontSize: '0.9rem' }}>Visit Official Facebook Page</span>
+        </div>
+      </a>
+    </div>
+
+{/* Info Grid */}
+    <div style={{ 
+      display: 'grid', 
+      gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', 
+      gap: '1rem', 
+      marginBottom: '2rem', 
+      alignItems: 'stretch' 
+    }}>
+      {[
+        { label: 'Leadership', val: priest },
+        { label: 'Address', val: address },
+        { label: 'Contact', val: contact }
+      ].map((item) => (
+        <div key={item.label} style={{ 
+          background: 'var(--sl-color-gray-6)', 
+          padding: '1.25rem', 
+          borderRadius: '12px', 
+          border: '1px solid var(--sl-color-gray-5)',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          height: '100%',
+          margin: '0' 
+        }}>
+          <span style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--sl-color-gray-3)', marginBottom: '0.25rem', display: 'block', lineHeight: '1.2' }}>
+            {item.label}
+          </span>
+          <span style={{ fontWeight: '600', color: 'var(--sl-color-white)', lineHeight: '1.2', display: 'block' }}>
+            {item.val}
+          </span>
+        </div>
+      ))}
+    </div>
+
+{/* About Parish*/}
+    <div style={{ 
+      position: 'relative', 
+      paddingLeft: '1.5rem', 
+      borderLeft: '3px solid var(--sl-color-accent)',
+      paddingTop: '0.5rem'
+    }}>
+      <h4 style={{ 
+        marginTop: '0',     
+        marginBottom: '0.75rem', 
+        color: 'var(--sl-color-white)',
+        lineHeight: '1.2'
+      }}>
+        About the Parish
+      </h4>
+      <div style={{ textAlign: 'justify', lineHeight: '1.8', color: 'var(--sl-color-gray-2)', fontSize: '1rem' }}>
+        {children}
+      </div>
+    </div>
+  </div>
+);
+
+{/* Tip */}
+
+<Aside type="tip">
+  Click on any church photo to visit their official community page for mass schedules and announcements.
+</Aside>
+
+### San Ildefonso Parish
+
+<ParishProfile 
+  name="San Ildefonso Parish" 
+  img={sanilImg} 
+  fbLink="https://www.facebook.com/sipfamily/" 
+  priest="Fr. Francis M. Sarmiento"
+  address="Estrella corner L. R. Yangco Sts., Navotas City"
+  contact="Tel. 8-281-0453"
+>
+It is dedicated to Saint Ildefonso, an archbishop from Toledo in the 7th century, who was well-known for his devotion to the Virgin Mary. The parish’s rich history reflects the local community’s cultural legacy. It regularly hosts religious events that involve parishioners of all ages, such as masses and novenas. Traditional Filipino and Spanish colonial elements are combined in the church’s architecture. It acts as a hub for social outreach initiatives, catechism, and spiritual development. To promote communal cohesion, the parish actively participates in regional festivals and celebrations. Its continuous initiatives aim to enhance its members’ moral principles, faith, and altruism.
+</ParishProfile>
+
+### San Exequiel Moreno Parish
+
+<ParishProfile 
+  name="San Exequiel Moreno Parish" 
+  img={sanexImg} 
+  fbLink="https://www.facebook.com/SanExequielMorenoParish/" 
+  priest="Fr. Ruben J. Maybuena"
+  address="Labahita cor. Langaray Sts., Ph 2. Kaunlaran Village 1409, Caloocan City"
+  contact="Tel. 8-288-9050 / 8-288-2851"
+>
+Honoring the Spanish Augustinian Recollect missionary Saint Ezekiel Moreno. The parish is well-known for its passionate devotion to its patron saint and lively community events. For the faithful, it offers regular masses, confessions, and religious instruction. The church incorporates aspects of the Catholic tradition of the Philippines. The parish actively provides social services to the community’s most impoverished members. To deepen parishioners’ faith, it plans spiritual retreats, Bible studies, and youth initiatives. San Exequiel’s feast day and local celebrations are enthusiastically and fervently observed. The parish aims to cultivate in its members both social responsibility and spiritual growth.
+</ParishProfile>
+
+### San Roque De Navotas Parish
+
+<ParishProfile 
+  name="San Roque De Navotas Parish" 
+  img={sanroqImg} 
+  fbLink="https://www.facebook.com/SanRoquedeNavotas1951/" 
+  priest="Fr. Elpidio A. Erlano, Jr."
+  address="M.Naval St., San Roque, Navotas City"
+  contact="Tel. 8-282-0052"
+>
+It is dedicated to San Roque, the patron saint of health and protection against plagues. The parish has a long-standing history and is essential to the community’s spiritual journey. It provides parishioners with sacramental services, religious instruction, and daily masses. The church building’s straightforward yet significant design features reflect traditional Filipino church architecture. A major component of the parish’s mission is community outreach programs, which help the underprivileged and disenfranchised. Additionally, the parish actively takes part in Navotas’ cultural and municipal events. It still encourages loyalty, empathy, and moral leadership in the neighborhood.
+</ParishProfile>
+
+### Diocesan Shrine & Parish of San Jose de Navotas
+
+<ParishProfile 
+  name="Diocesan Shrine & Parish of San Jose de Navotas" 
+  img={shrineImg} 
+  fbLink="https://www.facebook.com/sanjosedenavotasshrine/" 
+  priest="Fr. Silverio R. Mutia"
+  address="M. Naval St., San Jose Navotas City, Navotas"
+  contact="Tel. 8-282-9126"
+>
+It is devoted to Saint Joseph, the patron saint of laborers and the foster father of Jesus Christ. For the neighborhood, the parish acts as a hub for culture and spirituality. Its status as a shrine emphasizes its significance for religious ceremonies, pilgrimages, and devotion. Every day, the church holds religious education programs, confession services, and Masses. It regularly participates in outreach programs to help the underprivileged and disenfranchised in the community. To comfortably house parishioners, the construction combines modern elements with traditional Filipino church architecture. Festivals are devoutly observed, particularly the feast of Saint Joseph.
+</ParishProfile>
+
+### Sta. Clare of Assisi Parish
+
+<ParishProfile 
+  name="Sta. Clare of Assisi Parish" 
+  img={stclareImg} 
+  fbLink="https://www.facebook.com/StaClaraNgAssisi/" 
+  priest="Rev. Fr. Jerome Ponce, OFM"
+  address="Maya-Maya Street cor., Alupihang Dagat St., Longos, Malabon City"
+  contact="Tel. 8-852-34591"
+>
+The parish is devoted to Saint Clare, a devout follower of Saint Francis of Assisi, renowned for her devotion to prayer and poverty. It provides regular liturgical services, like as catechetical programs, novenas, and daily masses. Inspired by Saint Clare, the church’s architecture is simple yet inviting. The parish actively promotes faith and community involvement through programs for women, families, and young people. Additionally, social outreach initiatives are carried out to assist the community’s less fortunate people. Unusual festivities, such as Sta. Clare is characterized by lively religious and cultural activities. The parish places a strong emphasis on service to others, humility, and spiritual development.
+</ParishProfile>
+
+### San Lorenzo Ruiz and Companion Martyrs Parish
+
+<ParishProfile 
+  name="San Lorenzo Ruiz and Companion Martyrs Parish" 
+  img={sanloreImg} 
+  fbLink="https://www.facebook.com/slrcmp/" 
+  priest="Rev. Fr. Allan Lopez, OP"
+  address="Phase 1-C, Kaunlaran Village, North Bay, Boulevard South, Navotas City"
+  contact="Tel. 8-351-0886"
+>
+Lorenzo Ruiz, the first Filipino saint, and his colleague martyrs are honored at San Lorenzo Ruiz and Companion Martyrs Parish. The church serves a growing Catholic community and is situated in a vibrant urban area. For parishioners, it offers regular masses, confessions, catechism lessons, and spiritual retreats. The church structure honors traditional Catholic themes while reflecting modern Filipino style. The church actively supports health initiatives, education, and the underprivileged through community service. Special masses, processions, and neighborhood events are held on the feast day of San Lorenzo Ruiz. Inspired by the lives of its patron saint, the parish places a strong emphasis on bravery, faith, and resiliency. For the local faithful, it acts as a hub for moral instruction and spiritual development.
+</ParishProfile>
+
+### Sto. Niño De Pasion Parish
+
+<ParishProfile 
+  name="Sto. Niño De Pasion Parish" 
+  img={stoninoImg} 
+  fbLink="https://www.facebook.com/ParokyaNgSantoNinoDePasionDeNavotas/" 
+  priest=""
+  address="4 Daanghari St., Daanghari, Navotas"
+  contact="02-8687-4798"
+>
+Sto. Niño De Pasion Parish is dedicated to the Holy Child Jesus, a symbol of innocence, hope, and divine protection. It runs catechism programs, youth ministries, and retreats to deepen the faith of its members.The parish is actively engaged in charitable programs, helping marginalized groups and promoting social justice. Local festivals and the feast of Sto. Niño are celebrated with colorful processions and community gatherings. The parish fosters devotion, prayer, and moral values among parishioners. It serves as a guiding center for spiritual growth, community unity, and faith-based service.
+</ParishProfile>
+
+### Nuestra Señora De Los Remedios – Quasi Parish
+
+<ParishProfile 
+  name="Nuestra Señora De Los Remedios – Quasi Parish" 
+  img={nuestraImg} 
+  fbLink="https://www.facebook.com/p/Nuestra-Se%C3%B1ora-De-los-Remedios-Quasi-Parish-Diocese-of-Kalookan-100064754048742/" 
+  priest="Rev. Fr. Aniceto A. Paciente III."
+  address="442 M. Naval St., NBBN, Navotas City"
+  contact="0949 762 7701"
+>
+Nuestra Señora de los Remedios Quasi Parish is a Roman Catholic community located in Brgy. Tanza, Navotas City, and functions under the jurisdiction of the Diocese of Kalookan. As a "quasi parish," it serves as a spiritual hub for the local residents providing essential pastoral care, sacramental life, and social outreach under the patronage of Our Lady of Remedies. The community is characterized by its resilient faith and active devotion, often serving as a center for local religious festivities and communal support in one of Metro Manila’s most densely populated coastal areas.
+</ParishProfile>

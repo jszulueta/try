@@ -1,0 +1,150 @@
+---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+
+const allDocs = await getCollection('docs');
+
+// get pages that inside the 'news/' folder
+// and allow filtering out the index page itself if needed
+const newsPosts = allDocs.filter((doc) => {
+  return doc.id.startsWith('news/') && !doc.id.endsWith('index.mdx');
+});
+
+// 3. Sort by Date (Newest First)
+const sortedNews = newsPosts.sort((a, b) => {
+  const dateA = new Date(a.data.publishDate || 0).valueOf();
+  const dateB = new Date(b.data.publishDate || 0).valueOf();
+  return dateB - dateA;
+});
+
+function getPostUrl(id: string) {
+  const base = import.meta.env.BASE_URL;
+  
+  // 1. Ensure Base ends with slash
+  const cleanBase = base.endsWith('/') ? base : base + '/';
+  
+  // 2. Clean the ID (remove leading slash if present)
+  let cleanId = id.startsWith('/') ? id.slice(1) : id;
+  
+  // 3. Remove file extensions if they snuck in (rare with docsLoader but possible)
+  cleanId = cleanId.replace(/\.(md|mdx)$/, '');
+
+  return `${cleanBase}${cleanId}/`;
+}
+---
+
+<div class="news-grid">
+  {sortedNews.map((post) => (
+    <a href={getPostUrl(post.id)} class="news-card"> <div class="card-image">
+        {post.data.coverImage && (
+          <Image 
+            src={post.data.coverImage} 
+            alt={post.data.title} 
+            width={600} 
+            height={340}
+            class="zoom-img" 
+          />
+        )}
+      </div>
+
+      <div class="card-content">
+        <h3 class="card-title">{post.data.title}</h3>
+        
+        <p class="card-excerpt">
+            {post.data.description}
+        </p>
+        
+        <div class="card-meta">
+          {post.data.publishDate && (
+            <time>📅 {post.data.publishDate.toLocaleDateString()}</time>
+          )}
+          {post.data.author && (
+            <span>✍️ {post.data.author}</span>
+          )}
+        </div>
+      </div>
+    </a>
+  ))}
+</div>
+
+<style>
+  /* GRID LAYOUT */
+  .news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  /* CARD CONTAINER */
+  .news-card {
+    background-color: var(--sl-color-gray-6);
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.75rem;
+    overflow: hidden; /* Essential for keeping the zoomed image inside */
+    text-decoration: none;
+    color: inherit;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .news-card:hover {
+    box-shadow: var(--sl-shadow-lg);
+    border-color: var(--sl-color-accent);
+  }
+
+  /* IMAGE AREA (The Zoom Magic) */
+  .card-image {
+    width: 100%;
+    height: 200px;
+    overflow: hidden; /* This cuts off the image when it grows */
+    position: relative;
+  }
+
+  .zoom-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s cubic-bezier(0.25, 0.45, 0.45, 0.95); /* Smooth motion */
+  }
+
+  /* The actual interaction */
+  .news-card:hover .zoom-img {
+    transform: scale(1.1); /* Grow by 10% */
+  }
+
+  /* TEXT CONTENT */
+  .card-content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .card-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 0.75rem;
+    color: var(--sl-color-white);
+  }
+
+  .card-excerpt {
+    font-size: 0.95rem;
+    color: var(--sl-color-gray-2);
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+    flex-grow: 1; /* Pushes metadata to bottom */
+  }
+
+  /* METADATA (Bottom row) */
+  .card-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: var(--sl-color-gray-3);
+    border-top: 1px solid var(--sl-color-gray-5);
+    padding-top: 1rem;
+  }
+</style>

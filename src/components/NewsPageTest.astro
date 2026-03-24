@@ -1,0 +1,10 @@
+---
+const { author, publishDate, coverImage } = Astro.props.frontmatter;
+---
+<header class="news-header">
+  {publishDate && <time>{publishDate.toLocaleDateString()}</time>}
+  {author && <span>✍️ {author}</span>}
+  {coverImage && <img src={coverImage} />}
+</header>
+
+<slot />    

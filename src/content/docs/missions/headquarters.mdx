@@ -1,0 +1,51 @@
+---
+title: St. Therese Mission Headquarters
+description: Diocese of Kalookan officials celebrate the new facility.
+---
+
+import ArticlePage from '../../../components/ArticlePage.astro';
+import ImageGallery from '../../../components/ImageGallery.astro';
+import { Image } from 'astro:assets';
+
+import mainImg from '../../../assets/mission-hq/image1.jpg';
+import img2 from '../../../assets/mission-hq/image2.jpg';
+import img3 from '../../../assets/mission-hq/image3.jpg';
+import img4 from '../../../assets/mission-hq/image4.jpg';
+import img5 from '../../../assets/mission-hq/image5.jpg';
+import img6 from '../../../assets/mission-hq/image6.jpg';
+
+
+<ArticlePage>
+
+<Image src={mainImg} alt="Blessing Ceremony" />
+
+<span class="caption">Bishop Pablo Virgilio David leads the blessing of the new St. Therese Mission Headquarters.</span>
+
+<p class="lead">The Diocese of Kalookan Curia officials, together with dedicated mission partners, officially inaugurated the St. Therese Mission Headquarters in Malabon City.</p>
+
+## A Sanctuary for Missionaries
+
+The new structure was formally blessed by **Kalookan Bishop Pablo Virgilio David**. Designed to serve as a central hub for the diocese's outreach efforts, the headquarters includes:
+
+* **Function Hall** for community gatherings.
+* **Residential Bedrooms** for visiting missionaries.
+* **Administrative Spaces** for coordination.
+
+> "This headquarters is more than just a building; it is a testament to our commitment to the diocese's mission and a home for those who serve them."
+
+## Event Gallery
+
+Scroll through the highlights of the inauguration and blessing ceremony:
+<ImageGallery images={[
+  { src: img2.src},
+  { src: img3.src},
+  { src: img4.src},
+  { src: img5.src},
+  { src: img6.src}
+]} />
+
+## Strategic Impact
+
+Located in Malabon, the headquarters will act as the operational heart for mission activities in the sector. It provides a permanent base for mission partners to collaborate on poverty alleviation and youth ministry.
+
+</ArticlePage>
